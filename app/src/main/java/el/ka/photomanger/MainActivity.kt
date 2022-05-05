@@ -1,13 +1,16 @@
 package el.ka.photomanger
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import el.ka.photomanger.adapter.CategoriesAdapter
+import el.ka.photomanger.adapter.ListListener
 import el.ka.photomanger.adapter.PhotosAdapter
-import el.ka.photomanger.models.PhotoFile
 import el.ka.photomanger.common.PhotoManager
+import el.ka.photomanger.models.PhotoFile
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), ListListener {
     private lateinit var photoManager: PhotoManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -17,29 +20,19 @@ class MainActivity : AppCompatActivity() {
         photoManager = PhotoManager(this)
         val photos = photoManager.getAllPPhotos()
         val categories = photoManager.getCategories()
-        showPhotos(photos)
+        showCategories(categories)
     }
 
-    private fun showPhotos(photos: MutableList<PhotoFile>) {
-        this.photosGrid.adapter = PhotosAdapter(this, photos)
+    private fun showCategories(categories: Set<String>) {
+        val adapter = CategoriesAdapter(categories.toList())
+        adapter.setListListener(this)
+        this.categoriesGrid.adapter = adapter
+
+    }
+
+    override fun onClickListener(obj: Any) {
+        Toast.makeText(this, obj as String, Toast.LENGTH_SHORT).show()
     }
 
 
 }
-
-
-/*
-
-<GridView
-android:id="@+id/photosGrid"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-android:horizontalSpacing="2dp"
-android:numColumns="4"
-android:padding="2dp"
-android:verticalSpacing="2dp"
-app:layout_constraintBottom_toBottomOf="parent"
-app:layout_constraintEnd_toEndOf="parent"
-app:layout_constraintStart_toStartOf="parent"
-app:layout_constraintTop_toTopOf="parent"
-tools:listitem="@layout/photo_grid_item" />*/
