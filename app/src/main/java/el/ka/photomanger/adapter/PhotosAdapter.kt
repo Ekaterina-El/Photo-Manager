@@ -18,6 +18,11 @@ class PhotosAdapter(
 ) :
     RecyclerView.Adapter<PhotosAdapter.ViewHolder>() {
 
+    private var listener: ListListener? = null
+    fun setListListener(listener: ListListener) {
+        this.listener = listener
+    }
+
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -34,6 +39,19 @@ class PhotosAdapter(
         Glide.with(context).load(uri).placeholder(R.drawable.ic_launcher_foreground).centerCrop()
             .into(holder.itemView as ImageView)
     }
+
+    override fun onViewAttachedToWindow(holder: ViewHolder) {
+        super.onViewAttachedToWindow(holder)
+        holder.itemView.setOnClickListener {
+            listener?.onClickListener(photos[holder.adapterPosition])
+        }
+    }
+
+    override fun onViewDetachedFromWindow(holder: ViewHolder) {
+        super.onViewDetachedFromWindow(holder)
+        holder.itemView.setOnClickListener(null)
+    }
+
 
 }
 
