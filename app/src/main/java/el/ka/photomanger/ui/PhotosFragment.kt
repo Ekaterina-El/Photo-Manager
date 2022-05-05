@@ -3,6 +3,7 @@ package el.ka.photomanger.ui
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import el.ka.photomanger.MainActivity
 import el.ka.photomanger.R
@@ -29,6 +30,6 @@ class PhotosFragment : Fragment(R.layout.photos_fragment), ListListener {
 
     override fun onClickListener(obj: Any) {
         val photo = obj as PhotoFile
-        Toast.makeText(APP_ACTIVITY, "${photo.date}", Toast.LENGTH_SHORT).show()
+        APP_ACTIVITY.navController.navigate(R.id.action_photosFragment_to_detailPhotoFragment, bundleOf("photoInfo" to photo))
     }
 }

@@ -26,7 +26,6 @@ class CategoriesFragment : Fragment(R.layout.categories_fragment), ListListener 
     }
 
     override fun onClickListener(obj: Any) {
-        Toast.makeText(APP_ACTIVITY, "Move to $obj", Toast.LENGTH_SHORT).show()
         val bundle = bundleOf("category" to obj)
         APP_ACTIVITY.navController.navigate(R.id.action_categoriesFragment_to_photosFragment, bundle)
     }

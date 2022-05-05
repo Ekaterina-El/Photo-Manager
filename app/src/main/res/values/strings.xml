@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">PhotoManger</string>
+    <string name="image">image</string>
 </resources>
