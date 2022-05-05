@@ -6,11 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <ImageView
-        android:id="@+id/imageView"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/photosGrid"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:adjustViewBounds="true"
-        android:scaleType="centerCrop"
-        tools:srcCompat="@tools:sample/avatars" />
+        app:spanCount="4"
+        tools:listitem="@layout/photo_grid_item"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
