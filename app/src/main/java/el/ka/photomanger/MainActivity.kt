@@ -1,6 +1,7 @@
 package el.ka.photomanger
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import el.ka.photomanger.adapter.CategoriesAdapter
@@ -31,7 +32,8 @@ class MainActivity : AppCompatActivity(), ListListener {
     }
 
     override fun onClickListener(obj: Any) {
-        Toast.makeText(this, obj as String, Toast.LENGTH_SHORT).show()
+        val photos = photoManager.getPhotosByCategory(obj as String)
+        Toast.makeText(this, "$obj | ${photos.size}", Toast.LENGTH_SHORT).show()
     }
 
 
