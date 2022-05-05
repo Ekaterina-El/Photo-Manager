@@ -2,7 +2,9 @@ package el.ka.photomanger
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import el.ka.photomanger.adapter.PhotosAdapter
 import el.ka.photomanger.models.PhotoFile
+import el.ka.photomanger.common.PhotoManager
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -14,6 +16,7 @@ class MainActivity : AppCompatActivity() {
 
         photoManager = PhotoManager(this)
         val photos = photoManager.getAllPPhotos()
+        val categories = photoManager.getCategories()
         showPhotos(photos)
     }
 
