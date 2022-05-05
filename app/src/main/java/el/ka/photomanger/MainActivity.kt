@@ -1,39 +1,43 @@
 package el.ka.photomanger
 
+import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.NavHostFragment
 import el.ka.photomanger.adapter.CategoriesAdapter
 import el.ka.photomanger.adapter.ListListener
 import el.ka.photomanger.adapter.PhotosAdapter
+import el.ka.photomanger.common.APP_ACTIVITY
 import el.ka.photomanger.common.PhotoManager
 import el.ka.photomanger.models.PhotoFile
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity(), ListListener {
-    private lateinit var photoManager: PhotoManager
+class MainActivity : AppCompatActivity() {
+    lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        photoManager = PhotoManager(this)
-        val photos = photoManager.getAllPPhotos()
-        val categories = photoManager.getCategories()
-        showCategories(categories)
+        APP_ACTIVITY = this
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
+        navController = navHostFragment.navController
     }
 
-    private fun showCategories(categories: Set<String>) {
-        val adapter = CategoriesAdapter(categories.toList())
-        adapter.setListListener(this)
-        this.categoriesGrid.adapter = adapter
-
-    }
-
-    override fun onClickListener(obj: Any) {
-        val photos = photoManager.getPhotosByCategory(obj as String)
-        Toast.makeText(this, "$obj | ${photos.size}", Toast.LENGTH_SHORT).show()
+    companion object {
+        @SuppressLint("StaticFieldLeak")
+        private var photoManager: PhotoManager? = null
+        fun getPhotoManager(activity: AppCompatActivity): PhotoManager {
+            if (photoManager == null) {
+                photoManager = PhotoManager(activity)
+            }
+            return photoManager!!
+        }
     }
 
 
